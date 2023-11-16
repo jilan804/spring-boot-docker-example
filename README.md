@@ -69,3 +69,53 @@ Please post any questions as comments on the [blog post] or post them to Stack O
 Apache 2.0, see [LICENSE](LICENSE).
 
 [blog-post]: https://developer.okta.com/blog/2019/12/27/spring-boot-deploy-docker
+
+**githubaction pipeline:-**
+
+
+name: maven build
+
+on:
+  pull_request:
+    types:
+      - opened
+    
+jobs:
+  maven_build_and_test:
+    name: 'Maven CI'
+    runs-on: drm-label
+ 
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+ 
+    # - name: Set up JDK 17
+    #   uses: actions/setup-java@v3
+    #   with:
+    #     java-version: 17
+    #     cache: maven
+
+    # - name: Cache the Maven packages to speed up build
+    #   uses: actions/cache@v1
+    #   with:
+    #     path: ~/.m2
+    #     key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+    #     restore-keys: ${{ runner.os }}-m2  
+
+    # - name: Build with Maven
+    #   run: mvn -B -U -DskipTests clean package
+
+    # - name: JUnit test
+    #   run: mvn test
+
+  # build_docker_image_push:
+  #   needs: [maven_build_and_test]
+  #   uses: connectedpowertrainservices-NA/cps-github-actions/.github/workflows/docker.yaml@feature/AB-113-refactor-github-action-maven
+  #   with:
+  #     AZURE_CONTAINER_REGISTRY: springbootapplication
+  #     AZURE_REPOSITORY: cps/na
+  #     SERVICE_IMAGE_NAME: nginx
+  #   secrets:
+  #     REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+  #     REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
